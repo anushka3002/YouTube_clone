@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            width:33%;
+            height:500px;
+            border:1px solid #b6b2b2;
+            border-radius: 5px;
+            margin:auto;
+            margin-top: 3%;
+            font-family: Roboto,Arial,sans-serif;
+        }
+        #container2{
+            width:90%;
+            margin:auto;
+            height:30%;
+            margin-top: 5%;
+            text-align: center;
+        }
+        #container3{
+            width:80%;
+            margin:auto;
+            height:60%;
+        }
+        input{
+            width:98%;
+            height:40px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border:1px solid #dfd8d9;
+        }
+        #button{
+            width:25%;
+            background-color: #007aff;
+            color:white;
+            height:30px;
+            margin-top: 15px;
+            margin-left: 160px;
+        }
+        #flexthem{
+            display: flex;
+            justify-content: space-between;
+        }
+        input:hover{
+            border:1px solid #007aff;
+        }
+        #username{
+            margin-top:7%;
+        }
+        a{
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="container2">
+            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/128/google_logo_icon_170071.png" width="25%" height="30%">
+            <p style="font-size: 24px;margin-top:10px">Sign in</p>
+            <p style="font-size: 14px;">to continue to YouTube</p>
+        </div>
+        <div id="container3">
+            <form onsubmit="login(event)">
+            <div><input id="username" type="text" placeholder="Username" required></div>
+            <div><input id="password" type="password" placeholder="Password" required></div>
+            <div id="flexthem">
+                <a href="youtubesignup.html"><h5 style="color:#007aff">Create account</h5></a>
+                <a href="youtube.html"><input id="button" type="submit" value="Next"></a>
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var name1=document.getElementById('username').value;
+    var pass=document.getElementById('password').value
+    async function login(e){
+        try{
+            e.preventDefault()
+            var login_data={
+                username:document.getElementById('username').value,
+                password:document.getElementById('password').value
+            }
+            login_data=JSON.stringify(login_data);
+            console.log("login_data:",login_data)
+        }
+        catch(error){
+            console.log("error:",error);
+        }
+        let login_api=`https://masai-api-mocker.herokuapp.com/auth/login`
+        let response=await fetch(login_api,{
+            method:"POST",
+            body:login_data,
+            headers:{
+                "Content-type":"application/json",
+            },
+        });
+        let data=await response.json();
+        console.log("data:", data);
+        let username=document.getElementById("username").value;
+        localStorage.setItem('usernameyt',JSON.stringify(username)) || []
+        getUser(username,data.token);
+        (!data.error?(
+                console.log("woww"),
+                alert("Login Successful"),
+                window.location.href="youtube.html"
+        )
+            :(
+                console.log("hhhh"),
+                alert("Enter correct credentials")
+            )
+            )
+    }
+
+    async function getUser(username,token){
+        let api=`https://masai-api-mocker.herokuapp.com/user/${username}`
+        let response=await fetch(api,{
+            headers:{
+                "Content-Type":"application/json",
+                Authorization:`Bearer ${token}`,
+            },
+        });
+        let data=await response.json();
+        console.log("data:",data);
+        
+        
+    }
+</script>
