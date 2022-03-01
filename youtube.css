@@ -15,7 +15,7 @@ body{
 }
 #content1{
     width:100%;
-    border:1px solid transparent;
+    /* border:1px solid transparent; */
     margin-left: 7%;
     margin-top:100px ;
 }
