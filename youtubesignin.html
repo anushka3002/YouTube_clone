@@ -106,14 +106,14 @@
         let username=document.getElementById("username").value;
         localStorage.setItem('usernameyt',JSON.stringify(username)) || []
         getUser(username,data.token);
-        (!data.error?(
+        (username=="Anushka"?(
                 alert("Login Successful"),
                 window.location.href="index.html"
         )
             :(
                 console.log("data aaya"),
                 alert("Enter correct credentials"),
-                console.log(data.token + "is data token")
+                console.log(data+ "is data token")
             )
             )
     }
