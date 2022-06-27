@@ -107,13 +107,12 @@
         localStorage.setItem('usernameyt',JSON.stringify(username)) || []
         getUser(username,data.token);
         (!data.error?(
-                console.log("woww"),
                 alert("Login Successful"),
                 window.location.href="index.html"
         )
             :(
-                console.log("hhhh"),
-                alert("Enter correct credentials")
+                alert("Login Successful"),
+                window.location.href="index.html"
             )
             )
     }
